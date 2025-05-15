@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.movierecommendations.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="電影推薦"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_search"
         android:name="com.example.movierecommendations.ui.search.SearchFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:label="搜尋電影"
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/nav_favorites"
         android:name="com.example.movierecommendations.ui.favorites.FavoritesFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="我的收藏"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>
