@@ -2,11 +2,13 @@ package com.example.movierecommendations
 
 import android.os.Bundle
 import android.os.Build
+import android.view.Menu
 import android.widget.TextView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.movierecommendations.model.Movie
+import android.view.MenuItem
 
 class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,32 @@ class MovieDetailActivity : AppCompatActivity() {
     }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
+        return true
+    }
+    private var isFavorite = false
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_favorite -> {
+                isFavorite = !isFavorite
+                item.setIcon(
+                    if (isFavorite) R.drawable.ic_favorite
+                    else R.drawable.ic_favorite_border
+                )
+                Toast.makeText(this,
+                    if (isFavorite) "已加入收藏" else "已移除收藏",
+                    Toast.LENGTH_SHORT).show()
+                true
+            }
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_movie_detail, menu)
         return true
     }
 
