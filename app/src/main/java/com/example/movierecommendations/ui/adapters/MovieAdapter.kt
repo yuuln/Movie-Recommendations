@@ -9,7 +9,7 @@ import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierecommendations.R
 import com.example.movierecommendations.model.Movie
-import com.example.movierecommendations.ui.MovieDetailActivity
+import com.example.movierecommendations.MovieDetailActivity
 
 
 class MovieAdapter(private val movieList: List<Movie>) :
