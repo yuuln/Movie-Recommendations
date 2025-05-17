@@ -5,9 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.ImageView
+import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierecommendations.R
 import com.example.movierecommendations.model.Movie
+import com.example.movierecommendations.ui.MovieDetailActivity
+
 
 class MovieAdapter(private val movieList: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -31,7 +34,15 @@ class MovieAdapter(private val movieList: List<Movie>) :
         holder.title.text = movie.title
         holder.category.text = "分類：${movie.category}"
         holder.desc.text = movie.description
-    }
 
-    override fun getItemCount(): Int = movieList.size
-}
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra("movie", movie)
+            context.startActivity(intent)
+        }
+    }
+    override fun getItemCount(): Int {
+        return movieList.size
+    }
+    }
