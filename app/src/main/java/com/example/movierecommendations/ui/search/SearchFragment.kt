@@ -1,46 +1,54 @@
 package com.example.movierecommendations.ui.search
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.movierecommendations.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movierecommendations.databinding.FragmentSearchBinding
-
+import com.example.movierecommendations.ui.adapters.MovieAdapter
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var adapter: MovieAdapter
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
-        val searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
-
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val view = binding.root
 
-        val textView: TextView = binding.textDashboard
-        searchViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+
+        binding.recyclerSearch.layoutManager = LinearLayoutManager(requireContext())
+        adapter = MovieAdapter(emptyList())
+        binding.recyclerSearch.adapter = adapter
+
+        searchViewModel.filteredMovies.observe(viewLifecycleOwner) {
+            adapter = MovieAdapter(it)
+            binding.recyclerSearch.adapter = adapter
         }
-        return root
-    }
 
+        binding.editSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                searchViewModel.updateQuery(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+        return view
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
