@@ -1,5 +1,4 @@
 package com.example.movierecommendations
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -14,7 +13,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -24,7 +22,9 @@ class MainActivity : AppCompatActivity() {
             setOf(R.id.nav_home, R.id.nav_search, R.id.nav_favorites)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
         navView.setupWithNavController(navController)
+
     }
 
 }

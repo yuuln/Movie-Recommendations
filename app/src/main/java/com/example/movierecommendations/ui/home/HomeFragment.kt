@@ -1,5 +1,4 @@
 package com.example.movierecommendations.ui.home
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.example.movierecommendations.ui.adapters.MovieAdapter
 import com.example.movierecommendations.model.Movie
 
 class HomeFragment : Fragment() {
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MovieAdapter
     private lateinit var movieList: List<Movie>
@@ -62,7 +60,6 @@ class HomeFragment : Fragment() {
         )
         adapter = MovieAdapter(movieList)
         recyclerView.adapter = adapter
-
         return view
     }
 }

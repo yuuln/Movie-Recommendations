@@ -17,7 +17,6 @@
             android:src="@drawable/ic_launcher_background"
             android:contentDescription="海報"/>
 
-
         <TextView
             android:id="@+id/detailTitle"
             android:textSize="24sp"
@@ -29,7 +28,7 @@
         <TextView
             android:id="@+id/detailCategory"
             android:textSize="16sp"
-            android:textColor="#888888"
+            android:textColor="@color/black"
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

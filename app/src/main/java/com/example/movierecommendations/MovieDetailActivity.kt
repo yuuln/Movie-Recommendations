@@ -21,7 +21,7 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)  // ← 按鈕在這
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "電影介紹"
 
         val receivedMovie = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -50,15 +50,12 @@ class MovieDetailActivity : AppCompatActivity() {
         textCategory.text = "分類：${movie.category}"
         textDescription.text = movie.description
 
-        //從 SharedPreferences 讀取是否已收藏
         val prefs = getSharedPreferences("favorites", Context.MODE_PRIVATE)
         isFavorite = prefs.getBoolean(movie.title, false)
     }
 
-    // 建立右上角愛心選單
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_movie_detail, menu)
-        // 設定 icon 狀態
         val favItem = menu?.findItem(R.id.action_favorite)
         favItem?.icon = if (isFavorite)
             getDrawable(R.drawable.ic_favorite)
@@ -67,7 +64,6 @@ class MovieDetailActivity : AppCompatActivity() {
         return true
     }
 
-    // 點擊愛心按鈕時儲存狀態 + 切換圖示
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorite -> {
