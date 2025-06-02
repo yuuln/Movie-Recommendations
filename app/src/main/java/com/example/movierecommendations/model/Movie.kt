@@ -7,3 +7,4 @@ data class Movie(
     val description: String,
     val imageResId: Int
 ):Serializable
+//test
