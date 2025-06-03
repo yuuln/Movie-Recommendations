@@ -7,14 +7,13 @@ import android.widget.TextView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.movierecommendations.model.Movie
+import com.example.movierecommendations.model.MovieEntity
 import android.content.Context
-import com.example.movierecommendations.R
 import android.view.MenuItem
 
 class MovieDetailActivity : AppCompatActivity() {
 
-    private lateinit var movie: Movie
+    private lateinit var movie: MovieEntity
     private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +24,10 @@ class MovieDetailActivity : AppCompatActivity() {
         supportActionBar?.title = "電影介紹"
 
         val receivedMovie = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("movie", Movie::class.java)
+            intent.getSerializableExtra("movie", MovieEntity::class.java)
         } else {
             @Suppress("DEPRECATION")
-            intent.getSerializableExtra("movie") as? Movie
+            intent.getSerializableExtra("movie") as? MovieEntity
         }
 
         if (receivedMovie == null) {
@@ -44,7 +43,13 @@ class MovieDetailActivity : AppCompatActivity() {
         val textCategory = findViewById<TextView>(R.id.detailCategory)
         val textDescription = findViewById<TextView>(R.id.detailDescription)
 
-        imagePoster.setImageResource(movie.imageResId)
+        // 根據圖片檔名（例如 "romance_days366"）取得 drawable 資源
+        val resId = resources.getIdentifier(movie.imageUrl, "drawable", packageName)
+        if (resId != 0) {
+            imagePoster.setImageResource(resId)
+        }
+
+
         imagePoster.contentDescription = "電影海報：${movie.title}"
         textTitle.text = movie.title
         textCategory.text = "分類：${movie.category}"
@@ -90,5 +95,4 @@ class MovieDetailActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

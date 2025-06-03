@@ -21,6 +21,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            // 明確開啟 debuggable，讓 App Inspection 能使用
+            isDebuggable = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(

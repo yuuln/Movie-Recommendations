@@ -6,6 +6,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.movierecommendations.databinding.ActivityMainBinding
+import com.example.movierecommendations.initializer.DatabaseInitializer
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        DatabaseInitializer.populateDatabaseIfEmpty(this)
 
         val navView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
