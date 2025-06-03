@@ -8,3 +8,4 @@ data class Movie(
     val imageResId: Int
 ):Serializable
 //test
+//uu
