@@ -5,7 +5,7 @@ data class Movie(
     val title: String,
     val category: String,
     val description: String,
-    val imageResId: Int
+    val imageResId: String
 ):Serializable
 //test
 //uu
