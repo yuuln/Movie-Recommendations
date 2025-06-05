@@ -1,9 +1,6 @@
 package com.example.movierecommendations.ui.fragments
-
-
 import android.content.Context
 import android.content.Intent
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +17,6 @@ import com.example.movierecommendations.repository.MovieRepository
 import androidx.lifecycle.ViewModelProvider
 import com.example.movierecommendations.MovieDetailActivity
 import com.example.movierecommendations.viewmodel.MovieViewModelFactory
-
-
 
 class FavoritesFragment : Fragment() {
 
@@ -53,13 +48,10 @@ class FavoritesFragment : Fragment() {
         val dao = AppDatabase.getDatabase(requireContext()).movieDao()
         val repository = MovieRepository(dao)
         movieViewModel = ViewModelProvider(this, MovieViewModelFactory(repository))[MovieViewModel::class.java]
-
-        // 載入「最愛電影」
         val prefs = requireContext().getSharedPreferences("favorites", Context.MODE_PRIVATE)
         val favoriteTitles = prefs.all.filter { it.value == true }.map { it.key }
 
         movieViewModel.loadFavoriteMovies(favoriteTitles)
-
 
         movieViewModel.allMovies.observe(viewLifecycleOwner) { movies ->
             if (movies.isNullOrEmpty()) {

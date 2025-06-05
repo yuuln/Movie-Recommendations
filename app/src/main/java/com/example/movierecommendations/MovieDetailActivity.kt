@@ -43,12 +43,10 @@ class MovieDetailActivity : AppCompatActivity() {
         val textCategory = findViewById<TextView>(R.id.detailCategory)
         val textDescription = findViewById<TextView>(R.id.detailDescription)
 
-        // 根據圖片檔名（例如 "romance_days366"）取得 drawable 資源
         val resId = resources.getIdentifier(movie.imageUrl, "drawable", packageName)
         if (resId != 0) {
             imagePoster.setImageResource(resId)
         }
-
 
         imagePoster.contentDescription = "電影海報：${movie.title}"
         textTitle.text = movie.title
