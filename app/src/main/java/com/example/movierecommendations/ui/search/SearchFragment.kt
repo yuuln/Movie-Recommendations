@@ -2,8 +2,6 @@ package com.example.movierecommendations.ui.search
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movierecommendations.MovieDetailActivity
 import com.example.movierecommendations.databinding.FragmentSearchBinding
 import com.example.movierecommendations.ui.adapters.MovieAdapter
-import com.example.movierecommendations.ui.search.SearchViewModel
+import  androidx.core.widget.addTextChangedListener
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var searchViewModel: SearchViewModel
     private lateinit var adapter: MovieAdapter
+    private lateinit var searchViewModel: SearchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,27 +33,24 @@ class SearchFragment : Fragment() {
 
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
 
-        adapter = MovieAdapter { selectedMovie ->
+        adapter = MovieAdapter { movie ->
             val intent = Intent(requireContext(), MovieDetailActivity::class.java)
-            intent.putExtra("movie", selectedMovie)
+            intent.putExtra("movie", movie)
             startActivity(intent)
         }
 
-        binding.recyclerSearch.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerSearch.adapter = adapter
+        binding.recyclerSearchResults.adapter = adapter
+        binding.recyclerSearchResults.layoutManager = LinearLayoutManager(requireContext())
 
-        searchViewModel.filteredMovies.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        binding.editSearch.addTextChangedListener {
+            val query = it.toString()
+            searchViewModel.updateQuery(query)
         }
 
-        binding.editSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                searchViewModel.updateQuery(s.toString())
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
+        searchViewModel.filteredMovies.observe(viewLifecycleOwner) { movies ->
+            adapter.submitList(movies)
+            binding.textNoResults.visibility = if (movies.isEmpty()) View.VISIBLE else View.GONE
+        }
     }
 
     override fun onDestroyView() {
