@@ -17,11 +17,11 @@ interface MovieDao {
     @Query("DELETE FROM movies")
     suspend fun deleteAll()
 
-    // ✅ 根據分類查詢
+    // 根據分類查詢
     @Query("SELECT * FROM movies WHERE category = :category")
     suspend fun getMoviesByCategory(category: String): List<MovieEntity>
 
-    // ✅ 查詢最愛電影（假設 title 是唯一的最愛條件，可依需求調整）
+    // 查詢最愛電影（假設 title 是唯一的最愛條件，可依需求調整）
     @Query("SELECT * FROM movies WHERE title IN (:favoriteTitles)")
     suspend fun getFavoriteMovies(favoriteTitles: List<String>): List<MovieEntity>
 

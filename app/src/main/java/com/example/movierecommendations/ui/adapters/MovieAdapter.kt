@@ -34,14 +34,12 @@ class MovieAdapter(
         holder.category.text = movie.category
         holder.desc.text = movie.description
 
-        // 顯示圖片
         val context = holder.itemView.context
         val imageResId = context.resources.getIdentifier(
             movie.imageUrl, "drawable", context.packageName
         )
         holder.image.setImageResource(imageResId)
 
-        // 點擊事件
         holder.itemView.setOnClickListener {
             onItemClick(movie)
         }
